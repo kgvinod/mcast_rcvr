@@ -8,7 +8,32 @@
 
 #include "MulticastClient.h"
 #include <iostream>
+#include <stdexcept>
+
 using namespace std;
+
+// Constructor
+MulticastClient::MulticastClient(std::string local_ip, std::string multicast_ip, unsigned int multicast_port) 
+  : mLocalIp {local_ip}, 
+    mMulticastIp {multicast_ip}, 
+    mMulticastPort {multicast_port},
+    mSockFd {-1} 
+{
+    // invariants 
+    if (multicast_port > MAX_PORT_NUM)
+        throw range_error( "The port range is in error!" );
+}
+
+
+// Destructor
+MulticastClient::~MulticastClient() 
+{
+    if (mSockFd >= 0) {
+        cout << "Closing socket\n";
+        close(mSockFd);
+    }
+}
+
 
 // Open
 int MulticastClient::open()
@@ -76,10 +101,14 @@ int MulticastClient::open()
 
 
 // Read mcast stream
-int MulticastClient::readData(char *buffer, int size)
+int MulticastClient::readData(char *buffer, unsigned int size)
 {
 
-    // Read from socket
-    return read(mSockFd, buffer, size);
+    if (buffer != nullptr) {
+        // Read from socket
+        return read(mSockFd, buffer, size);
+    } 
+    
+    return -1;
 
 }

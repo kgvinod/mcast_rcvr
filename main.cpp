@@ -19,7 +19,7 @@ using namespace std;
 int main()
 {
 
-    int datalen;
+    unsigned int datalen;
     char databuf[1024];
     long total_data = 0;
     FILE *ptr_myfile;

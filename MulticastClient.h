@@ -22,7 +22,9 @@
 #include <unistd.h>
 
 
-// FsNode class
+const unsigned int MAX_PORT_NUM = 65535;
+
+// MulticastClient class
 class MulticastClient {
 
 public:
@@ -31,23 +33,23 @@ public:
     MulticastClient() = delete;
 
     // Constructor
-    MulticastClient(std::string local_ip, std::string multicast_ip, int multicast_port) : mLocalIp {local_ip}, mMulticastIp {multicast_ip}, mMulticastPort {multicast_port} {}
+    MulticastClient(std::string local_ip, std::string multicast_ip, unsigned int multicast_port);
 
     // Destructor
-    ~MulticastClient() {};
+    ~MulticastClient();
 
     // Open mcast stream
     int open();
 
     // Read mcast stream
-    int readData(char *buffer, int size);
+    int readData(char *buffer, unsigned int size);
 
 
 private:
 
     std::string mLocalIp;
     std::string mMulticastIp;
-    int mMulticastPort;
+    unsigned int mMulticastPort;
     int mSockFd;
     struct sockaddr_in mLocalSock;
     struct ip_mreq mGroup;
