@@ -31,7 +31,8 @@ int main()
     MulticastClient *client = new MulticastClient("10.0.0.246", "239.1.17.1", 11001);
     client->open();
     
-    while (1)
+    int iterations = 10000;
+    while (iterations--)
     {
         /* Read from the socket. */
         datalen = sizeof(databuf);
@@ -43,13 +44,18 @@ int main()
         {
             total_data += datalen;
             printf(".");
+            
             if ((total_data % 1024000) == 0)
                 printf ("%ld\n", total_data);
             fflush(stdout);
+            
             //printf("The message from multicast server is: \"%s\"\n", databuf);
+            
             fwrite(databuf, datalen, 1, ptr_myfile);
         }
     }
+    
+    delete client;
 
     return 0;
 }
