@@ -12,6 +12,10 @@
 #include "MulticastClient.h"
 using namespace std;
 
+/* VLC command for sending a multicast stream:
+ vlc -vvv ~/Videos/00027.MTS --sout '#transcode{vcodec=mp4v,acodec=mpga,vb=800,ab=128,deinterlace}:rtp{mux=ts,dst=239.1.17.1,port=11001,sdp=sap,name="TestStream"}'
+*/
+
 int main()
 {
 
